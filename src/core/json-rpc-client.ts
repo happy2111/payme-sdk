@@ -1,24 +1,10 @@
 import axios, { isAxiosError } from 'axios';
-import type { PaymeAuthMode } from '../types/payme.types';
-import type { PaymeConfig } from '../types/payme-config';
 import { buildAuthHeader, resolveBaseUrl } from './config';
 import { PaymeError } from './errors';
-
-interface JsonRpcError {
-  code: number;
-  message: string;
-  data?: unknown;
-}
-
-interface JsonRpcResponse<T> {
-  jsonrpc: '2.0';
-  id: number;
-  result?: T;
-  error?: JsonRpcError;
-}
+import type { PaymeAuthMode, PaymeConfig, JsonRpcResponse, JsonRpcError } from '../types';
+import crypto from 'crypto';
 
 export class JsonRpcClient {
-  private requestId = 0;
 
   constructor(
     private readonly config: PaymeConfig,
@@ -31,7 +17,7 @@ export class JsonRpcClient {
         resolveBaseUrl(this.config),
         {
           jsonrpc: '2.0',
-          id: ++this.requestId,
+          id: crypto.randomUUID(),
           method,
           params: params ?? {},
         },
