@@ -123,3 +123,10 @@ export interface Card {
      */
     verify: boolean;
 }
+
+
+
+
+export interface GetVerifyCodeParams {
+    token: string;
+}
