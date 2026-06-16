@@ -78,7 +78,7 @@ export interface CreateCardParams {
 }
 
 /**
- * Карта в ответе метода {@link https://developer.help.paycom.uz/metody-subscribe-api/cards.create | cards.create}.
+ * Данные карты в ответах Subscribe API.
  *
  * @example
  * ```ts
@@ -124,9 +124,141 @@ export interface Card {
     verify: boolean;
 }
 
+/**
+ * Обёртка ответа методов, возвращающих карту в поле `card`.
+ *
+ * Используется в {@link https://developer.help.paycom.uz/metody-subscribe-api/cards.verify | cards.verify}
+ * и {@link https://developer.help.paycom.uz/metody-subscribe-api/cards.check | cards.check}.
+ *
+ * @internal Используется внутри SDK для unwrap ответа API.
+ */
+export interface CardResult {
+    /** Данные карты. */
+    card: Card;
+}
 
-
-
+/**
+ * Параметры запроса метода {@link https://developer.help.paycom.uz/metody-subscribe-api/cards.get_verify_code | cards.get_verify_code}.
+ *
+ * Запрашивает отправку SMS с OTP-кодом для верификации карты.
+ * Вызывается с **client** авторизацией (только `merchantId`).
+ *
+ * @example
+ * ```ts
+ * const params: GetVerifyCodeParams = {
+ *   token: '...',
+ * };
+ * ```
+ */
 export interface GetVerifyCodeParams {
+    /** Токен карты, полученный из {@link cards.create}. */
     token: string;
+}
+
+/**
+ * Ответ метода {@link https://developer.help.paycom.uz/metody-subscribe-api/cards.get_verify_code | cards.get_verify_code}.
+ *
+ * @example
+ * ```ts
+ * const result: GetVerifyCodeResult = {
+ *   sent: true,
+ *   phone: '99890*****31',
+ *   wait: 60000,
+ * };
+ * ```
+ */
+export interface GetVerifyCodeResult {
+    /** Флаг успешной отправки SMS с кодом. */
+    sent: boolean;
+
+    /**
+     * Маскированный номер телефона, на который отправлено SMS.
+     *
+     * @example '99890*****31'
+     */
+    phone: string;
+
+    /**
+     * Время в миллисекундах, в течение которого OTP-код действителен.
+     *
+     * @example 60000
+     */
+    wait: number;
+}
+
+/**
+ * Параметры запроса метода {@link https://developer.help.paycom.uz/metody-subscribe-api/cards.verify | cards.verify}.
+ *
+ * Подтверждает карту с помощью OTP-кода из SMS.
+ * Вызывается с **client** авторизацией (только `merchantId`).
+ *
+ * @example
+ * ```ts
+ * const params: VerifyCardParams = {
+ *   token: '...',
+ *   code: '666666',
+ * };
+ * ```
+ */
+export interface VerifyCardParams {
+    /** Токен карты. */
+    token: string;
+
+    /**
+     * OTP-код из SMS.
+     *
+     * @example '666666'
+     */
+    code: string;
+}
+
+/**
+ * Параметры запроса метода {@link https://developer.help.paycom.uz/metody-subscribe-api/cards.check | cards.check}.
+ *
+ * Проверяет валидность токена карты.
+ * Вызывается с **server** авторизацией (`merchantId:secretKey`).
+ *
+ * @example
+ * ```ts
+ * const params: CheckCardParams = {
+ *   token: '...',
+ * };
+ * ```
+ */
+export interface CheckCardParams {
+    /** Токен карты. */
+    token: string;
+}
+
+/**
+ * Параметры запроса метода {@link https://developer.help.paycom.uz/metody-subscribe-api/cards.remove | cards.remove}.
+ *
+ * Удаляет токен карты.
+ * Вызывается с **server** авторизацией (`merchantId:secretKey`).
+ *
+ * @example
+ * ```ts
+ * const params: RemoveCardParams = {
+ *   token: '...',
+ * };
+ * ```
+ */
+export interface RemoveCardParams {
+    /** Токен карты для удаления. */
+    token: string;
+}
+
+/**
+ * Ответ метода {@link https://developer.help.paycom.uz/metody-subscribe-api/cards.remove | cards.remove}.
+ *
+ * @example
+ * ```ts
+ * const result: RemoveCardResult = {
+ *   success: true,
+ * };
+ * ```
+ */
+export interface RemoveCardResult {
+    /** Флаг успешного удаления токена. */
+    success: boolean;
 }
