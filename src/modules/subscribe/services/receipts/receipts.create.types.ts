@@ -138,7 +138,15 @@ export interface CreateReceiptParams {
      * @optional
      */
     detail?: CreateReceiptDetailInput;
-}
+
+    /**
+     * Флаг холдирования чека.
+     *
+     * @optional
+     */
+    hold?: boolean;
+
+} 
 
 /**
  * Ответ метода {@link https://developer.help.paycom.uz/metody-subscribe-api/receipts.create | receipts.create}.

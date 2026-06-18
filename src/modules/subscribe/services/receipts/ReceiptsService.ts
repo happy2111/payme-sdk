@@ -43,5 +43,10 @@ export class ReceiptsService extends ServerBaseService {
         return result;
     }
 
+
+    async confirmHold(params: ReceiptByIdParams): Promise<Receipt> {
+        const result = await this.serverRpc.call<ReceiptResult>('receipts.confirm_hold', params);
+        return result.receipt;
+    }
     
 }

@@ -63,6 +63,13 @@ export interface ReceiptsPayParams extends ReceiptByIdParams {
      * @optional
      */
     payer?: Payer;
+
+    /**
+     * Флаг холдирования чека.
+     *
+     * @optional
+     */
+    hold?: boolean;
 }
 
 /**
