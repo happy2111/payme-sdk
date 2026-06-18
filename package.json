@@ -1,0 +1,51 @@
+{
+  "name": "@proxy/payme-sdk",
+  "version": "0.1.0",
+  "description": "Payme Subscribe API SDK",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs && tsc --emitDeclarationOnly",
+    "dev": "tsup src/index.ts --format esm,cjs --watch",
+    "test": "vitest",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "payme",
+    "subscribe",
+    "api",
+    "sdk"
+  ],
+  "license": "MIT",
+  "author": "proxy",
+  "dependencies": {
+    "axios": "^1.17.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.3",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/happy2111/payme-sdk.git"
+  },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/happy2111/payme-sdk/issues"
+  },
+  "homepage": "https://github.com/happy2111/payme-sdk#readme"
+}
