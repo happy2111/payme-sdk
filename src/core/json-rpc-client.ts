@@ -2,7 +2,7 @@ import axios, { isAxiosError } from 'axios';
 import { buildAuthHeader, resolveBaseUrl } from './config';
 import { PaymeError } from './errors';
 import type { PaymeAuthMode, PaymeConfig, JsonRpcResponse, JsonRpcError } from '../types';
-import crypto from 'crypto';
+import { randomUUID } from 'node:crypto';
 
 export class JsonRpcClient {
 
@@ -17,7 +17,7 @@ export class JsonRpcClient {
         resolveBaseUrl(this.config),
         {
           jsonrpc: '2.0',
-          id: crypto.randomUUID(),
+          id: randomUUID(),
           method,
           params: params ?? {},
         },
